@@ -33,7 +33,7 @@ export class PostMessageUseCase {
     if (postedMessage.text.length > 280) {
       throw new MessageTooLongError();
     };
-    if (postedMessage.text.length === 0) {
+    if (postedMessage.text.trim().length === 0) {
       throw new EmptyMessageError();
     }
     this.messageRepository.save({

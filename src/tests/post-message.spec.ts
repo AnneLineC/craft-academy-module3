@@ -53,6 +53,18 @@ describe("Feature: Posting a message", () => {
 
       fixture.thenErrorShouldBe(EmptyMessageError);
     })
+
+    test("Alice cannot post a message with only whitespaces", () => {
+      fixture.givenNowIs(new Date('2023-01-19T19:00:00.000Z'));
+
+      fixture.whenUserPostsAMessage({
+        id: "message-id",
+        text: "    ",
+        author: "Alice"
+      });
+
+      fixture.thenErrorShouldBe(EmptyMessageError);
+    })
   })
 });
 
