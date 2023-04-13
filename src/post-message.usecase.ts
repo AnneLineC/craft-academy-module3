@@ -19,6 +19,9 @@ export interface DateProvider {
   getNow(): Date
 }
 
+export class MessageTooLongError extends Error {}
+export class EmptyMessageError extends Error {}
+
 export class PostMessageUseCase {
 
   constructor(
@@ -27,6 +30,12 @@ export class PostMessageUseCase {
   ) {}
 
   handle(postedMessage: PostedMessage) {
+    if (postedMessage.text.length > 280) {
+      throw new MessageTooLongError();
+    };
+    if (postedMessage.text.length === 0) {
+      throw new EmptyMessageError();
+    }
     this.messageRepository.save({
       id : postedMessage.id,
       text: postedMessage.text,
